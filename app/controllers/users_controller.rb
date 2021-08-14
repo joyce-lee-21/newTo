@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
+    # skip_before_action :authorize, only: :create
+
     def index
         users = User.all
         render json: users
@@ -8,15 +10,19 @@ class UsersController < ApplicationController
 
     def show
         user = User.find_by(id: session[:user_id])
+        # byebug
         if user
             render json: user
         else
-            render json: { error: "Invalid username or password" }, status: :unauthorized
+            render json: { error: "Not Authorized" }, status: :unauthorized
         end
+        # render json: current_user
+        # byebug
     end
 
     def create
         user = User.create(user_params)
+        city_profile = CityProfile.create(user_id: user.id, city: params[:city])
         if user.valid?
             session[:user_id] = user.id
             render json: user, status: :created
@@ -36,7 +42,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:name, :username, :password)
+        params.permit(:name, :username, :password)
     end
 
     def render_not_found_response
