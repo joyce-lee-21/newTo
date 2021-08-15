@@ -13,4 +13,8 @@ class User < ApplicationRecord
     def category_selections
         self.city_profiles.map{|profile| profile.category_selections}
     end
+
+    def venue_selections
+        self.city_profiles.map{|profile| profile.saved_venues}
+    end
 end

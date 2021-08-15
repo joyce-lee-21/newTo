@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :primary_categories, only: [:index] #used
   
   resources :saved_venues, only: [:index, :create, :destroy]
-  resources :category_selections, only: [:index, :update, :create]
+  resources :category_selections, only: [:index, :update, :create] #used
   resources :city_profiles, only: [:index, :show, :update, :create]
 
   # Signup, update account information
@@ -22,7 +22,10 @@ Rails.application.routes.draw do
 
   # Load more categories
   # get '/categories/list/:first&:last', to: 'secondary_categories#categoryparse'
-  get '/categories/list/:first&:last', to: 'primary_categories#categoryparse'
+  get '/categories/list/:first&:last', to: 'primary_categories#categoryparse' #used
+
+  # Delete category selections from profile
+  delete '/category_selections/profile=:id', to: 'category_selections#destroy'
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 

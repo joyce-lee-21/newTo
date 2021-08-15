@@ -21,6 +21,12 @@ class CategorySelectionsController < ApplicationController
         render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
     end
 
+    def destroy
+        selection = CategorySelection.where(:city_profile_id => params[:id])
+        selection.destroy_all
+        head :no_content
+    end
+
     private
 
     def selection_params
