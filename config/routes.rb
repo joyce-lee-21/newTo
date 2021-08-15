@@ -21,7 +21,8 @@ Rails.application.routes.draw do
   # get '/profile_select/:query', to: 'secondary_categories#categoryshow'
 
   # Load more categories
-  get '/categories/list/:first&:last', to: 'secondary_categories#categoryparse'
+  # get '/categories/list/:first&:last', to: 'secondary_categories#categoryparse'
+  get '/categories/list/:first&:last', to: 'primary_categories#categoryparse'
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 

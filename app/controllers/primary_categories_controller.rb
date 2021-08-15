@@ -11,4 +11,15 @@ class PrimaryCategoriesController < ApplicationController
         primarycat = PrimaryCategory.where("name like ?", "%#{query}%")
         render json: primarycat
     end 
+
+    def categoryparse
+        primarycats = PrimaryCategory.all
+        first = params[:first].to_i
+        last = params[:last].to_i
+        # if last > 9
+            render json: primarycats[first, last]
+        # else 
+        #     render json: secondarycats[0, 9]
+        # end
+    end
 end
