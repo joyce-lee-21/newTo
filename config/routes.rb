@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   # User login
   post '/login', to: 'sessions#create' #used
-  get '/me', to: "users#show" #used
+  # get '/me', to: "users#show"
   get '/logged_in', to: 'sessions#is_logged_in?'
 
   # User logout

@@ -5,7 +5,6 @@ class User < ApplicationRecord
     # validates :name, presence: true
     validates :username, presence: true 
     validates :username, uniqueness: true
-    # validates :password, presence: true
 
     def cities
         self.city_profiles.map{|profile| profile.city}

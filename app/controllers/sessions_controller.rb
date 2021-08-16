@@ -8,7 +8,11 @@ class SessionsController < ApplicationController
             login!
             render json: { 
                 logged_in: true, 
-                user: @user, include: [:cities, :category_selections, :venue_selections], 
+                user: @user,
+                cities: @user.cities,
+                category_selections: @user.category_selections,
+                venue_selections: @user.venue_selections,
+                city_profiles: @user.city_profiles,
                 status: :ok
             }
         else
