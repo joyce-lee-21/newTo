@@ -4,8 +4,4 @@ class SavedVenue < ApplicationRecord
     def user
         self.city_profile.user
     end
-
-    def category
-        
-    end
 end

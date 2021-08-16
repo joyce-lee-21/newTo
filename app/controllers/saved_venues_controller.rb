@@ -15,15 +15,15 @@ class SavedVenuesController < ApplicationController
     end
 
     def destroy
-        # venue = SavedVenue.find(params[:id])
-        @saved_venue.destroy
+        venue = SavedVenue.find(params[:id])
+        venue.destroy
         head :no_content
     end
 
     private
 
     def venue_params
-        params.require(:venue).permit(:city_profile_id, :name, :address, :url, :rating, :fs_venue_id, :lat, :long)
+        params.require(:venue).permit(:city_profile_id, :name, :address, :url, :rating, :fs_venue_id, :lat, :long, :category)
     end
 
     def render_not_found_response
