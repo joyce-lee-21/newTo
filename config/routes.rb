@@ -12,9 +12,10 @@ Rails.application.routes.draw do
   # User login
   post '/login', to: 'sessions#create' #used
   get '/me', to: "users#show" #used
+  get '/logged_in', to: 'sessions#is_logged_in?'
 
   # User logout
-  delete '/logout', to: 'sessions#destroy' #used
+  post '/logout', to: 'sessions#destroy' #used
 
   # Search for categories - may need to change the url from profile_select to model name
   get '/categories/:query', to: 'primary_categories#categoryshow'
