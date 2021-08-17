@@ -15,8 +15,8 @@ class SavedVenuesController < ApplicationController
     end
 
     def destroy
-        # venue = SavedVenue.find(params[:id])
-        @saved_venue.destroy
+        venue = SavedVenue.find(params[:id])
+        venue.destroy
         head :no_content
     end
 

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   resources :saved_venues, only: [:index, :create, :destroy]
   resources :category_selections, only: [:index, :update, :create] #used
-  resources :city_profiles, only: [:index, :show, :update, :create]
+  resources :city_profiles, only: [:index, :show, :create, :destroy]
 
   # Signup, update account information
   resources :users, only: [:index, :show, :update, :create]
@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   # get '/profile_select/:query', to: 'secondary_categories#categoryshow'
 
   # Load more categories
-  # get '/categories/list/:first&:last', to: 'secondary_categories#categoryparse'
-  get '/categories/list/:first&:last', to: 'primary_categories#categoryparse' #used
+  get '/categories/list/:first&:last', to: 'secondary_categories#categoryparse'
+  # get '/categories/list/:first&:last', to: 'primary_categories#categoryparse'
 
   # Delete category selections from profile
   delete '/category_selections/profile=:id', to: 'category_selections#destroy'
