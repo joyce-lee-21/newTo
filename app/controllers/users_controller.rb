@@ -33,9 +33,7 @@ class UsersController < ApplicationController
 
     def update
         user = User.find_by(id: params[:id])
-        city_profile = CityProfile.find_by(user_id: user.id)
         user.update(user_params)
-        city_profile.update(city: params[:city])
         render json: user, status: :accepted
     rescue ActiveRecord::RecordInvalid => e
         render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity

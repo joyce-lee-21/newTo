@@ -18,6 +18,14 @@ class CityProfilesController < ApplicationController
         render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
     end
 
+    def update
+        profile = CityProfile.find_by(id: params[:id])
+        profile.update(profile_params)
+        render json: profile, status: :accepted
+    rescue ActiveRecord::RecordInvalid => e
+        render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+    end
+
     def destroy
         profile = CityProfile.find(params[:id])
         profile.destroy
