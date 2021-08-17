@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   resources :saved_venues, only: [:index, :create, :destroy]
   resources :category_selections, only: [:index, :update, :create] #used
-  resources :city_profiles, only: [:index, :show, :create, :destroy]
+  resources :city_profiles, only: [:index, :show, :create, :update, :destroy]
 
   # Signup, update account information
   resources :users, only: [:index, :show, :update, :create]
