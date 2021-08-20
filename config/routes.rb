@@ -17,11 +17,11 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy' #used
 
   # Search for categories - may need to change the url from profile_select to model name
-  get '/categories/:query', to: 'primary_categories#categoryshow'
+  # get '/categories/:query', to: 'primary_categories#categoryshow'
   # get '/profile_select/:query', to: 'secondary_categories#categoryshow'
 
   # Load more categories
-  get '/categories/list/:first&:last', to: 'secondary_categories#categoryparse'
+  get '/categories/list/:primary_category/:first&:last', to: 'secondary_categories#categoryparse'
   # get '/categories/list/:first&:last', to: 'primary_categories#categoryparse'
 
   # Delete category selections from profile

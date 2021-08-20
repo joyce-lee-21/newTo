@@ -5,14 +5,17 @@ class SecondaryCategoriesController < ApplicationController
     end
 
     def categoryparse
-        secondarycats = SecondaryCategory.all
         first = params[:first].to_i
         last = params[:last].to_i
-        # if last > 9
+        if params[:primary_category].to_i == 0
+            secondarycats = SecondaryCategory.all
             render json: secondarycats[first, last]
-        # else 
+            # byebug
+        else 
+            secondarycats = SecondaryCategory.where(primary_category_id: params[:primary_category])
+            render json: secondarycats[first, last]
         #     render json: secondarycats[0, 9]
-        # end
+        end
     end
 
     def categoryshow
