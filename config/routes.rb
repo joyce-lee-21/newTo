@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :secondary_categories, only: [:index]
   resources :primary_categories, only: [:index] #used
   
-  resources :saved_venues, only: [:index, :create, :destroy]
+  resources :saved_venues, only: [:index, :create, :update, :destroy]
   resources :category_selections, only: [:index, :update, :create] #used
   resources :city_profiles, only: [:index, :show, :create, :update, :destroy]
 

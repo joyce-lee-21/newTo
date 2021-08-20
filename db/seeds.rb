@@ -29,7 +29,7 @@ city5 = CityProfile.create(user_id: user5.id, city: "Austin")
 city6 = CityProfile.create(user_id: user1.id, city: "Denver")
 city7 = CityProfile.create(user_id: user2.id, city: "Denver")
 
-sv1 = SavedVenue.create(city_profile_id: city1.id, name: "BookPeople", address: "603 N Lamar Blvd", url: "http://www.bookpeople.com", rating: 9.4, fs_venue_id: "41059b00f964a520820b1fe3", lat: 30.271786996839463, long: -97.75304367177156)
+sv1 = SavedVenue.create(city_profile_id: city1.id, name: "BookPeople", address: "603 N Lamar Blvd", url: "http://www.bookpeople.com", rating: 9.4, fs_venue_id: "41059b00f964a520820b1fe3", lat: 30.271786996839463, long: -97.75304367177156, is_completed: false)
 
 pc1 = PrimaryCategory.create(name: "Arts & Entertainment", fs_category_id: "4d4b7104d754a06370d81259")
 pc2 = PrimaryCategory.create(name: "College & University", fs_category_id: "4d4b7105d754a06372d81259")
