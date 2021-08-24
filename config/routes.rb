@@ -16,16 +16,15 @@ Rails.application.routes.draw do
   # User logout
   delete '/logout', to: 'sessions#destroy' #used
 
-  # Search for categories - may need to change the url from profile_select to model name
-  # get '/categories/:query', to: 'primary_categories#categoryshow'
-  # get '/profile_select/:query', to: 'secondary_categories#categoryshow'
-
   # Load more categories
-  get '/categories/list/:primary_category/:first&:last', to: 'secondary_categories#categoryparse'
+  get '/categories/list/:primary_category/:first&:last', to: 'secondary_categories#categoryparse' #used
   # get '/categories/list/:first&:last', to: 'primary_categories#categoryparse'
 
   # Delete category selections from profile
-  delete '/category_selections/profile=:id', to: 'category_selections#destroy'
+  delete '/category_selections/profile=:id', to: 'category_selections#destroy' #used
+
+  # Randomly select 3 categories from SecondaryCategory
+  get '/secondary_categories/randomize', to: 'secondary_categories#randomize'
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
