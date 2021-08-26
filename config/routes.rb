@@ -1,20 +1,12 @@
 Rails.application.routes.draw do
-  resources :secondary_categories, only: [:index]
-  resources :primary_categories, only: [:index] #used
-  
-  resources :saved_venues, only: [:index, :create, :update, :destroy]
-  resources :category_selections, only: [:index, :update, :create] #used
-  resources :city_profiles, only: [:index, :show, :create, :update, :destroy]
-
-  # Signup, update account information
-  resources :users, only: [:index, :show, :update, :create]
-
   # User login
-  post '/login', to: 'sessions#create' #used
-  get '/me', to: "users#show" #used
+  # post '/login', to: 'sessions#create'
+  post '/login', to: 'users#login'
+  # get '/me', to: "users#show"
+  get '/me', to: "users#get_user"
 
   # User logout
-  delete '/logout', to: 'sessions#destroy' #used
+  # delete '/logout', to: 'sessions#destroy'
 
   # Load more categories
   get '/categories/list/:primary_category/:first&:last', to: 'secondary_categories#categoryparse' #used
@@ -25,6 +17,16 @@ Rails.application.routes.draw do
 
   # Randomly select 3 categories from SecondaryCategory
   get '/secondary_categories/randomize', to: 'secondary_categories#randomize'
+
+  resources :secondary_categories, only: [:index]
+  resources :primary_categories, only: [:index] #used
+  
+  resources :saved_venues, only: [:index, :create, :update, :destroy]
+  resources :category_selections, only: [:index, :update, :create] #used
+  resources :city_profiles, only: [:index, :show, :create, :update, :destroy]
+
+  # Signup, update account information
+  # resources :users, only: [:index, :show, :update, :create]
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
