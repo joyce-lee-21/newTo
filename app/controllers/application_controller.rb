@@ -1,46 +1,37 @@
-class ApplicationController < ActionController::Base
-    include ActionController::Cookies
+class ApplicationController < ActionController::API
+    # include ActionController::Cookies
     
-    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    # rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
-    # before_action :authorize
-    skip_before_action :verify_authenticity_token
-    helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!, :set_user
-
-    def login!
-        session[:user_id] = @user.id
+    def current_user
+        # byebug
+        begin
+            method, token = request.headers[:Authorization].split(' ')
+            # byebug
+            if method === "Bearer"
+                payload,header = JWT.decode(token,"randomstring")
+                return User.find(payload["user_id"])
+            end
+        # rescue
+        #     raise Exception.new("Must be logged in")
+        end
     end
 
     def logged_in?
-        !!session[:user_id]
+        !!current_user
     end
 
-    def current_user
-        @current_user ||= User.find(session[:user_id]) if session[:user_id]
-    end
+    # private
 
-    def authorized_user?
-        @user == current_user
-    end
-
-    def logout!
-        session.clear
-    end
-
-    def set_user
-        @user = User.find_by(id: session[:user_id])
-    end
-
-    private 
     # def authorize
     #     current_user = User.find_by(id: session[:user_id])
     #     # byebug
     #     render json: {message:"Please login first"}, status: :unauthorized unless current_user
     # end
 
-    def render_unprocessable_entity_response(exception)
-        render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
-    end
+    # def render_unprocessable_entity_response(exception)
+    #     render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
+    # end
 
     
 end

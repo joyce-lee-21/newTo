@@ -1,5 +1,6 @@
 class CityProfilesController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+    skip_before_action :logged_in?
 
     def index
         profiles = CityProfile.all
@@ -19,11 +20,17 @@ class CityProfilesController < ApplicationController
     end
 
     def update
-        profile = CityProfile.find(params[:id])
+        profile = CityProfile.find_by(id: params[:id])
         profile.update(profile_params)
         render json: profile, status: :accepted
     rescue ActiveRecord::RecordInvalid => e
         render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+    end
+
+    def destroy
+        profile = CityProfile.find(params[:id])
+        profile.destroy
+        head :no_content
     end
 
     private

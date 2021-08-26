@@ -1,32 +1,32 @@
 Rails.application.routes.draw do
+  # User login
+  # post '/login', to: 'sessions#create'
+  post '/login', to: 'users#login'
+  # get '/me', to: "users#show"
+  get '/me', to: "users#get_user"
+
+  # User logout
+  # delete '/logout', to: 'sessions#destroy'
+
+  # Load more categories
+  get '/categories/list/:primary_category/:first&:last', to: 'secondary_categories#categoryparse' #used
+  # get '/categories/list/:first&:last', to: 'primary_categories#categoryparse'
+
+  # Delete category selections from profile
+  delete '/category_selections/profile=:id', to: 'category_selections#destroy' #used
+
+  # Randomly select 3 categories from SecondaryCategory
+  get '/secondary_categories/randomize', to: 'secondary_categories#randomize'
+
   resources :secondary_categories, only: [:index]
   resources :primary_categories, only: [:index] #used
   
-  resources :saved_venues, only: [:index, :create, :destroy]
+  resources :saved_venues, only: [:index, :create, :update, :destroy]
   resources :category_selections, only: [:index, :update, :create] #used
-  resources :city_profiles, only: [:index, :show, :update, :create]
+  resources :city_profiles, only: [:index, :show, :create, :update, :destroy]
 
   # Signup, update account information
-  resources :users, only: [:index, :show, :update, :create]
-
-  # User login
-  post '/login', to: 'sessions#create' #used
-  # get '/me', to: "users#show"
-  get '/logged_in', to: 'sessions#is_logged_in?'
-
-  # User logout
-  post '/logout', to: 'sessions#destroy' #used
-
-  # Search for categories - may need to change the url from profile_select to model name
-  get '/categories/:query', to: 'primary_categories#categoryshow'
-  # get '/profile_select/:query', to: 'secondary_categories#categoryshow'
-
-  # Load more categories
-  # get '/categories/list/:first&:last', to: 'secondary_categories#categoryparse'
-  get '/categories/list/:first&:last', to: 'primary_categories#categoryparse' #used
-
-  # Delete category selections from profile
-  delete '/category_selections/profile=:id', to: 'category_selections#destroy'
+  # resources :users, only: [:index, :show, :update, :create]
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
