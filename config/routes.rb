@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
   # User login
   # post '/login', to: 'sessions#create'
-  post '/login', to: 'users#login'
+  # post '/login', to: 'users#login'
+  post "/login", to: "auth#login"
+
+  # User auto login
   # get '/me', to: "users#show"
-  get '/me', to: "users#get_user"
+  # get '/me', to: "users#get_user"
+  get "/auto_login", to: "auth#auto_login"
+
+  # User access only if authorized
+  get "/user_is_authed", to: "auth#user_is_authed"
 
   # User logout
   # delete '/logout', to: 'sessions#destroy'
@@ -26,7 +33,7 @@ Rails.application.routes.draw do
   resources :city_profiles, only: [:index, :show, :create, :update, :destroy]
 
   # Signup, update account information
-  # resources :users, only: [:index, :show, :update, :create]
+  resources :users, only: [:index, :show, :update, :create]
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 

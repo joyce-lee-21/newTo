@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
-    before_action :logged_in?, only: :get_user
+    # before_action :logged_in?, only: :get_user
 
     def index
         users = User.all
@@ -20,30 +20,49 @@ class UsersController < ApplicationController
         # byebug
     end
 
+    # V3 with JWT sessions, start -----------
+
+    # def create
+    #     user = User.create(user_params)
+    #     city_profile = CityProfile.create(user_id: user.id, city: params[:city])
+    #     if user.valid?
+    #         render json: {user: user, token: JWT.encode({user_id: user.id}, "randomstring")}, methods: [:cities, :category_selections, :venue_selections, :city_profiles], status: :created
+    #     else
+    #     render json: {errors: user.errors.full_messages}, status: :unprocessable_entity
+    #     end
+    # end
+
+    # def login
+    #     user = User.find_by(username: params[:username])
+    #     if user&.authenticate(params[:password])
+    #         # byebug
+    #         render json: {user: user, token: JWT.encode({user_id: user.id}, "randomstring")}, methods: [:cities, :category_selections, :venue_selections, :city_profiles]
+    #     else
+    #         render json: { errors: ["Invalid username or password"] }, status: :unauthorized
+    #     end
+    # end
+
+    # def get_user
+    #     user = self.current_user
+    #     render json: user
+    # end
+
+    # V3 end --------------------------------
+
+    # V4 start ------------------------------
+    # User signing up -> resources :users, only: [:create]
     def create
         user = User.create(user_params)
         city_profile = CityProfile.create(user_id: user.id, city: params[:city])
         if user.valid?
-            render json: {user: user, token: JWT.encode({user_id: user.id}, "randomstring")}, status: :created
+            payload = {user_id: user.id}
+            token = encode_token(payload)
+            render json: {user: user, jwt: token}
         else
-        render json: {error: user.errors.full_messages}, status: :unprocessable_entity
+            render json: {errors: user.errors.full_messages}, status: :unprocessable_entity
         end
     end
-
-    def login
-        user = User.find_by(username: params[:username])
-        if user&.authenticate(params[:password])
-            # byebug
-            render json: {user: user, token: JWT.encode({user_id: user.id}, "randomstring")}, methods: [:cities, :category_selections, :venue_selections, :city_profiles]
-        else
-            render json: { errors: ["Invalid username or password"] }, status: :unauthorized
-        end
-    end
-
-    def get_user
-        user = self.current_user
-        render json: user
-    end
+    # V4 end --------------------------------
 
     def update
         user = User.find_by(id: params[:id])

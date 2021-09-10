@@ -1,5 +1,5 @@
 class SecondaryCategoriesController < ApplicationController
-    skip_before_action :logged_in?
+    # skip_before_action :logged_in?
 
     def index
         secondarycats = SecondaryCategory.all
