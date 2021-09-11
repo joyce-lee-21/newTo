@@ -1,5 +1,4 @@
 class SecondaryCategoriesController < ApplicationController
-    # skip_before_action :logged_in?
 
     def index
         secondarycats = SecondaryCategory.all
@@ -12,11 +11,9 @@ class SecondaryCategoriesController < ApplicationController
         if params[:primary_category].to_i == 0
             secondarycats = SecondaryCategory.all
             render json: secondarycats[first, last]
-            # byebug
         else 
             secondarycats = SecondaryCategory.where(primary_category_id: params[:primary_category])
             render json: secondarycats[first, last]
-        #     render json: secondarycats[0, 9]
         end
     end
 

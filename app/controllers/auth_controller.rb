@@ -1,5 +1,4 @@
 class AuthController < ApplicationController
-    # before_action :require_login
     # User logging in -> post "/login", to: "auth#login"
     def login
         user = User.find_by(username: params[:username])
