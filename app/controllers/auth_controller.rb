@@ -5,9 +5,9 @@ class AuthController < ApplicationController
         if user && user.authenticate(params[:password])
             payload = {user_id: user.id}
             token = encode_token(payload)
-            render json: {user: user, jwt: token, success: "Welcome back, #{user.username}"}, methods: [:cities, :category_selections, :venue_selections, :city_profiles] 
+            render json: {user: user, jwt: token, success: "Welcome back, #{user.username}"}, methods: [:cities, :category_selections, :venue_selections, :city_profiles], status: :ok 
         else
-            render json: {failure: "Log in failed! Username or password invalid!"}
+            render json: {failure: "Login failed: username or password is invalid."}, status: :unauthorized
         end
     end
 
