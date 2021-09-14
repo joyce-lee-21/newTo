@@ -21,7 +21,7 @@ class UsersController < ApplicationController
         if user.valid?
             payload = {user_id: user.id}
             token = encode_token(payload)
-            render json: {user: user, jwt: token}
+            render json: {user: user, jwt: token}, methods: [:cities, :category_selections, :venue_selections, :city_profiles], status: :ok
         else
             render json: {errors: user.errors.full_messages}, status: :unprocessable_entity
         end
