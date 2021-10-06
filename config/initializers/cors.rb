@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://newto-backend.herokuapp.com'
+    origins ['http://localhost:3001', 'https://new-to.netlify.app']
 
     resource '*',
       headers: :any,
